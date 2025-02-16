@@ -1,48 +1,34 @@
 // Fetch Google Sheets Data
 async function fetchData() {
-  // Replace this URL with your published Google Sheet link
   const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRSdShEUVJzKieRYgX6fK1twiNkt1HBoxuabieN8w2R_v4DumvMpSeUOVCG4yH8DT9z-TPTEuqlN90o/pub?output=csv';
-  
-  try {
-    const response = await fetch(sheetUrl);
-    const data = await response.text();
-    const rows = data.split('\n').slice(1); // Remove header row
+  const response = await fetch(sheetUrl);
+  const data = await response.text();
+  const rows = data.split('\n').slice(1); // Remove header row
 
-    // Loop through each row and process the data
-    rows.forEach(row => {
-      const [businessName, location, phone, reviews] = row.split(',');
+  rows.forEach(row => {
+    const [
+      fullAddress, borough, street, city, zipCode, state, country, latitude, longitude, h3, timeZone, plusCode,
+      areaService, workingHours, workingHoursOld, otherHours, popularTimes, businessStatus, about, range, posts,
+      description, typicalTimeSpent, verified, ownerId, ownerTitle, ownerLink, reservationLinks, bookingLink,
+      menuLink, orderLinks, locationLink, reviewsLink, placeId, googleId, cid, kgmid, reviewsId, locatedGoogleId,
+      category, type, outscraperQuery
+    ] = row.split(',');
 
-      // Log the data to the console (for testing)
-      console.log({
-        businessName,
-        location,
-        phone,
-        reviews
-      });
+    // Populate the template with data
+    const template = document.getElementById('template').innerHTML;
+    const rendered = template
+      .replace(/{{businessName}}/g, about || description)
+      .replace(/{{fullAddress}}/g, fullAddress)
+      .replace(/{{city}}/g, city)
+      .replace(/{{state}}/g, state)
+      .replace(/{{phone}}/g, '123-456-7890') // Replace with actual phone if available
+      .replace(/{{description}}/g, description)
+      .replace(/{{reviewsLink}}/g, reviewsLink)
+      .replace(/{{services}}/g, category || type);
 
-      // You can now use this data to dynamically update your website
-      // For example, update the business name in the header:
-      const header = document.getElementById('header');
-      if (header) {
-        header.querySelector('h1').textContent = businessName;
-      }
-
-      // Update the phone number in the "Call Us Now" button:
-      const callButton = document.querySelector('.cta-buttons button[onclick*="tel:"]');
-      if (callButton) {
-        callButton.setAttribute('onclick', `tel:${phone}`);
-      }
-
-      // Update the reviews section:
-      const reviewsSection = document.getElementById('google-reviews');
-      if (reviewsSection) {
-        reviewsSection.innerHTML = `<iframe src="${reviews}" width="100%" height="500px"></iframe>`;
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
+    // Append the rendered HTML to the body
+    document.body.innerHTML += rendered;
+  });
 }
 
-// Call the function to fetch and display data
 fetchData();
