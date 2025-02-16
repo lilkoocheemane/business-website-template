@@ -1,7 +1,7 @@
 // Fetch Google Sheets Data
 async function fetchData() {
   // Replace this URL with your published Google Sheet link
-  const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRSdShEUVJzKieRYgX6fK1twiNkt1HBoxuabieN8w2R_v4DumvMpSeUOVCG4yH8DT9z-TPTEuqlN90o/pubhtml';
+  const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRSdShEUVJzKieRYgX6fK1twiNkt1HBoxuabieN8w2R_v4DumvMpSeUOVCG4yH8DT9z-TPTEuqlN90o/pub?output=csv';
   
   try {
     const response = await fetch(sheetUrl);
