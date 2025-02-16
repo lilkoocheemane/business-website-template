@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Business Website</title>
+  <title>{{businessName}}</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Header -->
   <header id="header">
     <div class="container">
-      <h1>Business Name</h1>
+      <h1>{{businessName}}</h1>
       <nav>
         <ul>
           <li><a href="#about">About</a></li>
@@ -21,7 +21,7 @@
       </nav>
       <div class="cta-buttons">
         <button onclick="window.location.href='#schedule'">Schedule Service</button>
-        <button onclick="window.location.href='tel:+1234567890'">Call Us Now</button>
+        <button onclick="window.location.href='tel:{{phone}}'">Call Us Now</button>
       </div>
     </div>
   </header>
@@ -29,8 +29,8 @@
   <!-- Hero Section -->
   <section id="hero">
     <div class="container">
-      <h2>Welcome to Business Name</h2>
-      <p>Your trusted partner for [services].</p>
+      <h2>Welcome to {{businessName}}</h2>
+      <p>Your trusted electrician in {{city}}, {{state}}.</p>
     </div>
   </section>
 
@@ -38,7 +38,9 @@
   <section id="about">
     <div class="container">
       <h2>About Us</h2>
-      <p>Information about the business...</p>
+      <p>{{description}}</p>
+      <p><strong>Address:</strong> {{fullAddress}}</p>
+      <p><strong>Phone:</strong> {{phone}}</p>
     </div>
   </section>
 
@@ -47,9 +49,9 @@
     <div class="container">
       <h2>Our Services</h2>
       <ul>
-        <li>Residential Services</li>
-        <li>Commercial Services</li>
-        <li>24/7 Emergency Services</li>
+        {{#services}}
+        <li>{{.}}</li>
+        {{/services}}
       </ul>
     </div>
   </section>
@@ -59,7 +61,7 @@
     <div class="container">
       <h2>Customer Reviews</h2>
       <div id="google-reviews">
-        <!-- Google Reviews will be embedded here -->
+        <iframe src="{{reviewsLink}}" width="100%" height="500px"></iframe>
       </div>
     </div>
   </section>
@@ -67,7 +69,7 @@
   <!-- Footer -->
   <footer id="footer">
     <div class="container">
-      <p>&copy; 2023 Business Name. All rights reserved.</p>
+      <p>&copy; 2023 {{businessName}}. All rights reserved.</p>
     </div>
   </footer>
 
